@@ -21,7 +21,7 @@ export default function Home() {
         />
       )}
       {openDownload && <DownloadData />}
-      <div className="bg-[#030303] min-h-dvh">
+      <div className="bg-primary-dark min-h-dvh">
         <div>
           <Image
             src="/images/home-bg.png"
@@ -39,13 +39,13 @@ export default function Home() {
           <div className="flex flex-col justify-center items-center lg:h-[calc(100dvh-72px)] overflow-auto p-4 lg:pb-[88px]">
             <div className="max-w-[380px]">
               <div>
-                <h1 className="text-2xl md:text-3xl leading-[30px] text-[#FFFFF6] mb-5 text-center font-TacticSans">
+                <h1 className="text-2xl md:text-3xl leading-[30px] text-light mb-5 text-center font-TacticSans">
                   Select platforms to connect to Stacked
                 </h1>
-                <p className="text-sm md:text-base text-[#9D9D95] md:leading-6 text-center font-volksansTest">
+                <p className="text-sm md:text-base text-muted md:leading-6 text-center font-volksansTest">
                   Connect tools to manage your Leagues.
                 </p>
-                <p className="text-sm md:text-base text-[#9D9D95] md:leading-6 text-center font-volksansTest">
+                <p className="text-sm md:text-base text-muted md:leading-6 text-center font-volksansTest">
                   Add at least one now, you can always add more later.
                 </p>
               </div>
@@ -55,7 +55,7 @@ export default function Home() {
                   return (
                     <div
                       key={index}
-                      className="bg-[#141414] rounded-md p-4 md:p-6 flex items-center justify-between"
+                      className="bg-secondary-dark rounded-md p-4 md:p-6 flex items-center justify-between"
                     >
                       <div className="flex items-center gap-4">
                         <Image
@@ -65,18 +65,18 @@ export default function Home() {
                           alt={tool.name}
                         />
                         <div>
-                          <p className="text-[#FFFFF6] font-volksansTest leading-[0px]">
+                          <p className="text-light font-volksansTest leading-[0px]">
                             {tool.name}
                           </p>
                           {tool.subtext && (
-                            <p className="text-xs text-[#9D9D95] font-volksansTest leading-[0px] mt-5">
+                            <p className="text-xs text-muted font-volksansTest leading-[0px] mt-5">
                               {tool.subtext}
                             </p>
                           )}
                         </div>
                       </div>
                       <div
-                        className="bg-[#FFFFFF1A] border border-[#FFFFFF1A] w-7 h-7 flex justify-center items-center rounded cursor-pointer"
+                        className="bg-muted-white border border-muted-white w-7 h-7 flex justify-center items-center rounded cursor-pointer"
                         onClick={() => {
                           if (isSelected) {
                             setSelected((prev) =>

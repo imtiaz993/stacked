@@ -20,8 +20,8 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       className={`rounded font-medium leading-5 px-5 w-full min-h-[48px] font-volksansTest ${
         !disabled
-          ? "text-[#030303] bg-[#B5FF4D]"
-          : "text-[#666662] bg-[#FFFFFF1A] border border-[#FFFFFF33]"
+          ? "text-primary-dark bg-accent-green"
+          : "text-disabled-gray bg-muted-white border border-muted-white-border"
       }`}
     >
       {text}

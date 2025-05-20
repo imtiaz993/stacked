@@ -20,14 +20,14 @@ const InputField: React.FC<InputFieldProps> = ({
 }) => {
   return (
     <div>
-      <div className="bg-[#FFFFFF1A] rounded flex items-center gap-2 p-2.5">
+      <div className="bg-muted-white rounded flex items-center gap-2 p-2.5">
         {prefix && <Image src={prefix} width={20} height={20} alt="prefix" />}
         <input
           placeholder={placeholder}
           type={type}
           autoComplete="new-field"
           {...props}
-          className="outline-none bg-transparent w-full text-[#FFFFF6] placeholder:text-[#9D9D95] font-volksansTest"
+          className="outline-none bg-transparent w-full text-light placeholder:text-muted font-volksansTest"
         />
       </div>
       {showError && (

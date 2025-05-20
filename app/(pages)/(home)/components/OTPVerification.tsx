@@ -95,7 +95,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
   return (
     <div className="mt-8">
       <div>
-        <p className="text-sm md:text-base text-[#9D9D95] mb-6 font-volksansTest">
+        <p className="text-sm md:text-base text-muted mb-6 font-volksansTest">
           Enter a 6-digit code sent to {email}
         </p>
         <div className="grid grid-cols-6 gap-2">
@@ -108,7 +108,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
               maxLength={1}
               pattern="[0-9]*"
               {...(otpForm.getFieldProps(key) as FieldInputProps<string>)}
-              className="bg-[#FFFFFF1A] font-volksansTest outline-none rounded p-2.5 h-16 md:h-20 text-[#FFFFF6] text-[40px] text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="bg-muted-white font-volksansTest outline-none rounded p-2.5 h-16 md:h-20 text-light text-[40px] text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
           ))}
         </div>
