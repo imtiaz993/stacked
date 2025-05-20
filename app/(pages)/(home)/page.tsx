@@ -50,7 +50,7 @@ export default function Home() {
         <div>
           <Image
             src="/images/home-bg.png"
-            className="absolute right-0 top-0 w-[60%]"
+            className="absolute right-0 top-0 w-full h-full md:w-[60%]"
             width={0}
             height={0}
             sizes="100vw"
