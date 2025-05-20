@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const Connect = ({ setOpenConnect }) => {
+const Connect = ({ setOpenConnect, setOpenDownload }) => {
   const [state, setState] = useState("login");
 
   const Login = () => {
@@ -24,30 +24,49 @@ const Connect = ({ setOpenConnect }) => {
     return (
       <div className="mt-8">
         <div className="mb-5 flex flex-col gap-3">
-          <div className="bg-[#FFFFFF1A] rounded flex items-center gap-2 p-2.5">
-            <Image src="/icons/email.svg" width={20} height={20} alt="email" />
-            <input
-              placeholder="Email address"
-              type="email"
-              autoComplete="off"
-              {...loginForm.getFieldProps("email")}
-              className="outline-none bg-transparent w-full text-[#FFFFF6] placeholder:text-[#9D9D95] font-volksansTest"
-            />
+          <div>
+            <div className="bg-[#FFFFFF1A] rounded flex items-center gap-2 p-2.5">
+              <Image
+                src="/icons/email.svg"
+                width={20}
+                height={20}
+                alt="email"
+              />
+              <input
+                placeholder="Email address"
+                type="email"
+                autoComplete="off"
+                {...loginForm.getFieldProps("email")}
+                className="outline-none bg-transparent w-full text-[#FFFFF6] placeholder:text-[#9D9D95] font-volksansTest"
+              />
+            </div>
+            {loginForm.touched.email && loginForm.errors.email && (
+              <p className="text-xs text-red-500 mt-1 font-volksansTest">
+                {loginForm.errors.email}
+              </p>
+            )}
           </div>
-          <div className="bg-[#FFFFFF1A] rounded flex items-center gap-2 p-2.5">
-            <Image
-              src="/icons/lock.svg"
-              width={20}
-              height={20}
-              alt="password"
-            />
-            <input
-              placeholder="Password"
-              type="password"
-              autoComplete="off"
-              {...loginForm.getFieldProps("password")}
-              className="outline-none bg-transparent w-full text-[#FFFFF6] placeholder:text-[#9D9D95] font-volksansTest"
-            />
+          <div>
+            <div className="bg-[#FFFFFF1A] rounded flex items-center gap-2 p-2.5">
+              <Image
+                src="/icons/lock.svg"
+                width={20}
+                height={20}
+                alt="password"
+              />
+              <input
+                placeholder="Password"
+                type="password"
+                autoComplete="off"
+                {...loginForm.getFieldProps("password")}
+                className="outline-none bg-transparent w-full text-[#FFFFF6] placeholder:text-[#9D9D95] font-volksansTest"
+              />
+            </div>
+            {loginForm.touched.password && loginForm.errors.password && (
+              <p className="text-xs text-red-500 mt-1 font-volksansTest">
+                {loginForm.errors.password}
+              </p>
+            )}
           </div>
         </div>
         <button
@@ -68,7 +87,7 @@ const Connect = ({ setOpenConnect }) => {
     );
   };
 
-  const OTP = () => {
+  const OTP = ({ setOpenDownload }) => {
     const otpRefs = [
       useRef(null),
       useRef(null),
@@ -100,6 +119,7 @@ const Connect = ({ setOpenConnect }) => {
       onSubmit: (values) => {
         console.log("OTP Submitted:", values);
         setOpenConnect(false);
+        setOpenDownload(true);
       },
     });
 
@@ -185,7 +205,11 @@ const Connect = ({ setOpenConnect }) => {
             />
           </div>
         </div>
-        {state === "login" ? <Login /> : <OTP />}
+        {state === "login" ? (
+          <Login />
+        ) : (
+          <OTP setOpenDownload={setOpenDownload} />
+        )}
       </div>
     </div>
   );

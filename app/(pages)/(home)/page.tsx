@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Connect from "./components/Connect";
+import DownloadData from "./components/DownloadData";
 const tools = [
   {
     name: "Sleeper",
@@ -34,10 +35,17 @@ const tools = [
 export default function Home() {
   const [selected, setSelected] = useState([]);
   const [openConnect, setOpenConnect] = useState(false);
+  const [openDownload, setOpenDownload] = useState(false);
 
   return (
     <>
-      {openConnect && <Connect setOpenConnect={setOpenConnect} />}
+      {openConnect && (
+        <Connect
+          setOpenConnect={setOpenConnect}
+          setOpenDownload={setOpenDownload}
+        />
+      )}
+      {openDownload && <DownloadData />}
       <div className="bg-[#030303] min-h-dvh ">
         <div>
           <Image
@@ -82,11 +90,11 @@ export default function Home() {
                           alt={tool.name}
                         />
                         <div>
-                          <p className="text-[#FFFFF6] font-volksansTest">
+                          <p className="text-[#FFFFF6] font-volksansTest leading-[0px]">
                             {tool.name}
                           </p>
                           {tool.subtext && (
-                            <p className="text-xs text-[#9D9D95] font-volksansTest">
+                            <p className="text-xs text-[#9D9D95] font-volksansTest leading-[0px] mt-5">
                               {tool.subtext}
                             </p>
                           )}
@@ -124,6 +132,7 @@ export default function Home() {
                       ? "text-[#030303] bg-[#B5FF4D]"
                       : "text-[#666662] bg-[#FFFFFF1A] border border-[#FFFFFF33]"
                   }`}
+                  disabled={selected.length == 0}
                   onClick={() => {
                     setOpenConnect(true);
                   }}
