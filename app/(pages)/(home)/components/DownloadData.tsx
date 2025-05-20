@@ -210,13 +210,13 @@ const DownloadData: React.FC = () => {
               {state.status !== "pending" &&
                 state.status !== "completed" &&
                 state.tasks?.length > 0 && (
-                  <div className="mt-4 space-y-2 p-3 bg-[#26262699] rounded">
+                  <div className="mt-4 space-y-2 p-3 bg-subtask-bg rounded">
                     {state.tasks.map((task, taskIndex) => (
                       <div
                         key={taskIndex}
                         className={`flex flex-col gap-1 ${
                           taskIndex !== state.tasks.length - 1
-                            ? "border-b border-[#404040] pb-3"
+                            ? "border-b border-subtask-border pb-3"
                             : ""
                         }`}
                       >
