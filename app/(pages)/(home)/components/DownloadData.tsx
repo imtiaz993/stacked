@@ -200,7 +200,7 @@ const DownloadData: React.FC = () => {
                   >
                     {state.name}
                   </p>
-                  {state.status !== "pending" && state.subText && (
+                  {state.status === "completed" && state.subText && (
                     <p className="text-xs text-muted font-volksansTest left-0 mt-0.5">
                       {state.subText}
                     </p>
