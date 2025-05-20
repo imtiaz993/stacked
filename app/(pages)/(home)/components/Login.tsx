@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import Button from "../../../components/BUtton";
 import InputField from "../../../components/InputField";
 
-const Login = ({ setState }) => {
+const Login = ({ setState, setEmail }) => {
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string()
@@ -15,6 +15,7 @@ const Login = ({ setState }) => {
     initialValues: { email: "", password: "" },
     validationSchema: loginSchema,
     onSubmit: (values) => {
+      setEmail(values.email)
       setState("otp");
     },
   });

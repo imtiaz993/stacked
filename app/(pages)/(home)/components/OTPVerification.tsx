@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const OTPVerification = ({ setOpenConnect, setOpenDownload }) => {
+const OTPVerification = ({ email, setOpenConnect, setOpenDownload }) => {
   const otpRefs = [
     useRef(null),
     useRef(null),
@@ -75,7 +75,7 @@ const OTPVerification = ({ setOpenConnect, setOpenDownload }) => {
     <div className="mt-8">
       <div>
         <p className="text-sm md:text-base text-[#9D9D95] mb-6 font-volksansTest">
-          Enter a 6-digit code sent to email@address.com
+          Enter a 6-digit code sent to {email}
         </p>
         <div className="grid grid-cols-6 gap-2">
           {Object.keys(otpForm.values).map((key, index) => (

@@ -5,6 +5,7 @@ import OTPVerification from "./OTPVerification";
 
 const Connect = ({ setOpenConnect, setOpenDownload }) => {
   const [state, setState] = useState("login");
+  const [email, setEmail] = useState("");
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="fixed inset-0 bg-[#00000040] z-40"></div>
@@ -30,9 +31,10 @@ const Connect = ({ setOpenConnect, setOpenDownload }) => {
           </div>
         </div>
         {state === "login" ? (
-          <Login setState={setState} />
+          <Login setState={setState} setEmail={setEmail} />
         ) : (
           <OTPVerification
+            email={email}
             setOpenConnect={setOpenConnect}
             setOpenDownload={setOpenDownload}
           />
