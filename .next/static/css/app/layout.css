@@ -542,6 +542,9 @@ video {
 .mb-6 {
   margin-bottom: 1.5rem;
 }
+.mt-6 {
+  margin-top: 1.5rem;
+}
 .flex {
   display: flex;
 }
@@ -589,6 +592,11 @@ video {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.appearance-none {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -754,6 +762,11 @@ video {
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
+.\[appearance\:textfield\] {
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
+}
 .placeholder\:text-\[\#0e0e0d\]::-moz-placeholder {
   --tw-text-opacity: 1;
   color: rgb(14 14 13 / var(--tw-text-opacity, 1));
@@ -807,4 +820,12 @@ video {
   .lg\:pb-\[88px\] {
     padding-bottom: 88px;
   }
+}
+.\[\&\:\:-webkit-inner-spin-button\]\:appearance-none::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+          appearance: none;
+}
+.\[\&\:\:-webkit-outer-spin-button\]\:appearance-none::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+          appearance: none;
 }

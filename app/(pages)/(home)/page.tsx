@@ -33,10 +33,11 @@ const tools = [
 
 export default function Home() {
   const [selected, setSelected] = useState([]);
+  const [openConnect, setOpenConnect] = useState(false);
 
   return (
     <>
-      <Connect />
+      {openConnect && <Connect setOpenConnect={setOpenConnect} />}
       <div className="bg-[#030303] min-h-dvh ">
         <div>
           <Image
@@ -121,6 +122,9 @@ export default function Home() {
                       ? "text-[#030303] bg-[#B5FF4D]"
                       : "text-[#666662] bg-[#FFFFFF1A] border border-[#FFFFFF33]"
                   }`}
+                  onClick={() => {
+                    setOpenConnect(true);
+                  }}
                 >
                   {selected.length > 0
                     ? "Continue"
