@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { tasks } from "../../../../constants";
 import { Task } from "../../../../types/tasks";
+import { FlickeringGrid } from "../../../components/FlickeringGrid";
 
 const DownloadData: React.FC = () => {
   const [states, setStates] = useState<Task[]>(tasks);
@@ -150,12 +151,25 @@ const DownloadData: React.FC = () => {
             </p>
           </div>
         </div>
+
         <div className="my-8 flex flex-col gap-4">
           {states.map((state, index) => (
             <div
               key={index}
-              className="bg-secondary-dark rounded-md p-4 md:p-6"
+              className="bg-secondary-dark relative rounded-md p-4 md:p-6"
             >
+              {state.status === "inprogress" && (
+                <div className="absolute top-1 left-1 right-0 bottom-0 z-10 w-full h-full">
+                  <FlickeringGrid
+                    className="w-full h-full"
+                    squareSize={4}
+                    gridGap={5}
+                    color="#393939"
+                    maxOpacity={0.2}
+                    flickerChance={0.5}
+                  />
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <div>
                   <p
