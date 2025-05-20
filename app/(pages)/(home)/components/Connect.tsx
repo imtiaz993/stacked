@@ -31,7 +31,7 @@ const Connect = ({ setOpenConnect }) => {
               type="email"
               autoComplete="off"
               {...loginForm.getFieldProps("email")}
-              className="outline-none bg-transparent w-full text-[#FFFFF6] placeholder:text-[#9D9D95]"
+              className="outline-none bg-transparent w-full text-[#FFFFF6] placeholder:text-[#9D9D95] font-volksansTest"
             />
           </div>
           <div className="bg-[#FFFFFF1A] rounded flex items-center gap-2 p-2.5">
@@ -46,7 +46,7 @@ const Connect = ({ setOpenConnect }) => {
               type="password"
               autoComplete="off"
               {...loginForm.getFieldProps("password")}
-              className="outline-none bg-transparent w-full text-[#FFFFF6] placeholder:text-[#9D9D95]"
+              className="outline-none bg-transparent w-full text-[#FFFFF6] placeholder:text-[#9D9D95] font-volksansTest"
             />
           </div>
         </div>
@@ -56,7 +56,7 @@ const Connect = ({ setOpenConnect }) => {
             loginForm.handleSubmit();
           }}
           disabled={!loginForm.isValid || !loginForm.dirty}
-          className={`rounded font-medium leading-5 px-5 w-full min-h-[48px] ${
+          className={`rounded font-medium leading-5 px-5 w-full min-h-[48px] font-volksansTest ${
             loginForm.isValid && loginForm.dirty
               ? "text-[#030303] bg-[#B5FF4D]"
               : "text-[#666662] bg-[#FFFFFF1A] border border-[#FFFFFF33]"
@@ -139,7 +139,7 @@ const Connect = ({ setOpenConnect }) => {
     return (
       <div className="mt-8">
         <div>
-          <p className="text-sm md:text-base text-[#9D9D95] mb-6">
+          <p className="text-sm md:text-base text-[#9D9D95] mb-6 font-volksansTest">
             Enter a 6-digit code sent to email@address.com
           </p>
           <div className="grid grid-cols-6 gap-2">
@@ -152,7 +152,7 @@ const Connect = ({ setOpenConnect }) => {
                 maxLength={1}
                 pattern="[0-9]*"
                 {...otpForm.getFieldProps(key)}
-                className="bg-[#FFFFFF1A] outline-none rounded p-2.5 h-16 md:h-20 text-[#FFFFF6] text-[40px] text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                className="bg-[#FFFFFF1A] font-volksansTest outline-none rounded p-2.5 h-16 md:h-20 text-[#FFFFF6] text-[40px] text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               />
             ))}
           </div>
@@ -163,12 +163,12 @@ const Connect = ({ setOpenConnect }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="fixed inset-0 bg-[#00000080] z-40"></div>
-      <div className="relative z-50 bg-[#030303] p-4 md:p-8 rounded-md shadow-[0px_16px_32px_0px_rgba(#000/25)] w-11/12 max-w-[480px]">
+      <div className="fixed inset-0 bg-[#00000040] z-40"></div>
+      <div className="relative z-50 bg-[#030303] p-4 md:p-8 rounded-md shadow-[0px_16px_32px_0px_rgba(#00000040)] w-11/12 max-w-[480px]">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <Image src="/icons/espn.svg" width={20} height={20} alt="tool" />
-            <p className="text-[#FFFFF6] text-lg font-medium">
+            <p className="text-[#FFFFF6] text-lg font-medium font-volksansTest">
               Connecting ESPN
             </p>
           </div>

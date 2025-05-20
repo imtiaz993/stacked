@@ -7,7 +7,12 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        volksansTest: ["volksansTest", "serif"],
+        TacticSans: ["TacticSans", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };

@@ -56,13 +56,13 @@ export default function Home() {
           <div className="flex flex-col justify-center items-center lg:h-[calc(100dvh-72px)] overflow-auto p-4 lg:pb-[88px]">
             <div className="max-w-[380px]">
               <div>
-                <h1 className="text-2xl md:text-3xl leading-[30px] text-[#FFFFF6] mb-5 text-center">
+                <h1 className="text-2xl md:text-3xl leading-[30px] text-[#FFFFF6] mb-5 text-center font-TacticSans">
                   Select platforms to connect to Stacked
                 </h1>
-                <p className="text-sm md:text-base text-[#9D9D95] md:leading-6 text-center">
+                <p className="text-sm md:text-base text-[#9D9D95] md:leading-6 text-center font-volksansTest">
                   Connect tools to manage your Leagues.
                 </p>
-                <p className="text-sm md:text-base text-[#9D9D95] md:leading-6 text-center">
+                <p className="text-sm md:text-base text-[#9D9D95] md:leading-6 text-center font-volksansTest">
                   Add at least one now, you can always add more later.
                 </p>
               </div>
@@ -82,9 +82,11 @@ export default function Home() {
                           alt={tool.name}
                         />
                         <div>
-                          <p className="text-[#FFFFF6]">{tool.name}</p>
+                          <p className="text-[#FFFFF6] font-volksansTest">
+                            {tool.name}
+                          </p>
                           {tool.subtext && (
-                            <p className="text-xs text-[#9D9D95]">
+                            <p className="text-xs text-[#9D9D95] font-volksansTest">
                               {tool.subtext}
                             </p>
                           )}
@@ -117,7 +119,7 @@ export default function Home() {
               </div>
               <div className="pb-4">
                 <button
-                  className={`rounded  font-medium leading-5 px-5 w-full min-h-[48px] ${
+                  className={`rounded  font-medium leading-5 px-5 w-full min-h-[48px] font-volksansTest ${
                     selected.length > 0
                       ? "text-[#030303] bg-[#B5FF4D]"
                       : "text-[#666662] bg-[#FFFFFF1A] border border-[#FFFFFF33]"

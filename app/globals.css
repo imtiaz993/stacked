@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "volksansTest";
+  src: url("../public/fonts/volksansTest-Light.otf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "volksansTest";
+  src: url("../public/fonts/volksansTest-Normal.otf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "volksansTest";
+  src: url("../public/fonts/volksansTest-Regular.otf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "volksansTest";
+  src: url("../public/fonts/volksansTest-SemiBold.otf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "volksansTest";
+  src: url("../public/fonts/volksansTest-Bold.otf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TacticSans";
+  src: url("../public/fonts/TacticSans-Med.otf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
