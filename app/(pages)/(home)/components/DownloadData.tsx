@@ -1,68 +1,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
-
-interface Subtask {
-  name: string;
-  status: "pending" | "inprogress" | "completed";
-  completedPercentage: number;
-  timeLeft: number;
-}
-
-interface Task {
-  name: string;
-  subText?: string;
-  status: "pending" | "inprogress" | "completed";
-  subTasksHeadline?: string;
-  tasks?: Subtask[];
-}
+import { tasks } from "../../../../constants";
+import { Task } from "../../../../types/tasks";
 
 const DownloadData: React.FC = () => {
-  const [states, setStates] = useState<Task[]>([
-    {
-      name: "Connecting to platform",
-      status: "inprogress",
-    },
-    {
-      name: "Finding Active Slates",
-      subText: "4 leagues found",
-      status: "inprogress",
-    },
-    {
-      name: "Downloading Drafts",
-      status: "pending",
-      subTasksHeadline: "Loading Leagues",
-      tasks: [
-        {
-          name: "League Delta",
-          status: "pending",
-          completedPercentage: 0,
-          timeLeft: 7,
-        },
-        {
-          name: "League Gamma",
-          status: "pending",
-          completedPercentage: 0,
-          timeLeft: 3,
-        },
-        {
-          name: "League Beta",
-          status: "pending",
-          completedPercentage: 0,
-          timeLeft: 15,
-        },
-      ],
-    },
-    {
-      name: "Syncing Data",
-      status: "pending",
-    },
-    {
-      name: "Calculating Exposures / Data",
-      status: "pending",
-    },
-  ]);
+  const [states, setStates] = useState<Task[]>(tasks);
 
-  // Simulate progress for subtasks
+  // Simulate progress for tasks and subtasks
   useEffect(() => {
     const interval = setInterval(() => {
       setStates((prevStates) => {
@@ -78,55 +22,98 @@ const DownloadData: React.FC = () => {
           );
           if (activeTaskIndex !== -1) {
             newStates[activeTaskIndex].status = "inprogress";
-            newStates[activeTaskIndex].tasks[0].status = "inprogress";
+            // If the task has subtasks, start the first subtask
+            if (newStates[activeTaskIndex].tasks?.length > 0) {
+              newStates[activeTaskIndex].tasks[0].status = "inprogress";
+            }
           }
           return newStates;
         }
 
         const activeTask = newStates[activeTaskIndex];
-        const activeSubtaskIndex = activeTask.tasks.findIndex(
-          (subtask) => subtask.status === "inprogress"
-        );
 
-        // If no active subtask, start the first pending subtask
-        if (activeSubtaskIndex === -1) {
-          const nextSubtaskIndex = activeTask.tasks.findIndex(
-            (subtask) => subtask.status === "pending"
+        // Case 1: Task has subtasks
+        if (activeTask.tasks?.length > 0) {
+          const activeSubtaskIndex = activeTask.tasks.findIndex(
+            (subtask) => subtask.status === "inprogress"
           );
-          if (nextSubtaskIndex !== -1) {
-            activeTask.tasks[nextSubtaskIndex].status = "inprogress";
+
+          // If no active subtask, start the first pending subtask
+          if (activeSubtaskIndex === -1) {
+            const nextSubtaskIndex = activeTask.tasks.findIndex(
+              (subtask) => subtask.status === "pending"
+            );
+            if (nextSubtaskIndex !== -1) {
+              activeTask.tasks[nextSubtaskIndex].status = "inprogress";
+            }
+            return newStates;
           }
-          return newStates;
-        }
 
-        const activeSubtask = activeTask.tasks[activeSubtaskIndex];
-        const increment = 100 / (activeSubtask.timeLeft * 10); // 100% over timeLeft seconds (10 ticks per second)
+          const activeSubtask = activeTask.tasks[activeSubtaskIndex];
+          const increment = 100 / (activeSubtask.timeLeft * 10); // 100% over timeLeft seconds (10 ticks per second)
 
-        // Update subtask progress
-        if (activeSubtask.completedPercentage < 100) {
-          activeSubtask.completedPercentage = Math.min(
-            activeSubtask.completedPercentage + increment,
-            100
-          );
-        }
+          // Update subtask progress
+          if (activeSubtask.completedPercentage < 100) {
+            activeSubtask.completedPercentage = Math.min(
+              activeSubtask.completedPercentage + increment,
+              100
+            );
+            activeSubtask.timeLeft = Math.max(activeSubtask.timeLeft - 0.1, 0);
+          }
 
-        // Mark subtask as completed when done
-        if (activeSubtask.completedPercentage >= 100) {
-          activeSubtask.status = "completed";
-          activeSubtask.completedPercentage = 100;
+          // Mark subtask as completed when done
+          if (activeSubtask.completedPercentage >= 100) {
+            activeSubtask.status = "completed";
+            activeSubtask.completedPercentage = 100;
+            activeSubtask.timeLeft = 0;
 
-          // Check if there's a next subtask
-          const nextSubtaskIndex = activeTask.tasks.findIndex(
-            (subtask, idx) =>
-              idx > activeSubtaskIndex && subtask.status === "pending"
-          );
+            // Check if there's a next subtask
+            const nextSubtaskIndex = activeTask.tasks.findIndex(
+              (subtask, idx) =>
+                idx > activeSubtaskIndex && subtask.status === "pending"
+            );
 
-          if (nextSubtaskIndex !== -1) {
-            // Start the next subtask
-            activeTask.tasks[nextSubtaskIndex].status = "inprogress";
-          } else {
-            // All subtasks completed, mark task as completed
+            if (nextSubtaskIndex !== -1) {
+              // Start the next subtask
+              activeTask.tasks[nextSubtaskIndex].status = "inprogress";
+            } else {
+              // All subtasks completed, mark task as completed
+              activeTask.status = "completed";
+
+              // Start the next task if available
+              const nextTaskIndex = newStates.findIndex(
+                (task, idx) =>
+                  idx > activeTaskIndex && task.status === "pending"
+              );
+              if (nextTaskIndex !== -1) {
+                newStates[nextTaskIndex].status = "inprogress";
+                if (newStates[nextTaskIndex].tasks?.length > 0) {
+                  newStates[nextTaskIndex].tasks[0].status = "inprogress";
+                }
+              } else {
+                // All tasks completed, stop the interval
+                clearInterval(interval);
+              }
+            }
+          }
+        } else {
+          // Case 2: Task has no subtasks
+          const increment = 100 / (activeTask.timeLeft * 10); // 100% over timeLeft seconds (10 ticks per second)
+
+          // Update task progress
+          if (activeTask.completedPercentage < 100) {
+            activeTask.completedPercentage = Math.min(
+              activeTask.completedPercentage + increment,
+              100
+            );
+            activeTask.timeLeft = Math.max(activeTask.timeLeft - 0.1, 0);
+          }
+
+          // Mark task as completed when done
+          if (activeTask.completedPercentage >= 100) {
             activeTask.status = "completed";
+            activeTask.completedPercentage = 100;
+            activeTask.timeLeft = 0;
 
             // Start the next task if available
             const nextTaskIndex = newStates.findIndex(
@@ -134,7 +121,9 @@ const DownloadData: React.FC = () => {
             );
             if (nextTaskIndex !== -1) {
               newStates[nextTaskIndex].status = "inprogress";
-              newStates[nextTaskIndex].tasks[0].status = "inprogress";
+              if (newStates[nextTaskIndex].tasks?.length > 0) {
+                newStates[nextTaskIndex].tasks[0].status = "inprogress";
+              }
             } else {
               // All tasks completed, stop the interval
               clearInterval(interval);
@@ -173,12 +162,10 @@ const DownloadData: React.FC = () => {
                     className={`font-volksansTest ${
                       state.status === "completed"
                         ? "text-accent-green"
-                        : "text-light "
+                        : "text-light"
                     }`}
                   >
-                    {state.status === "inprogress"
-                      ? state.subTasksHeadline
-                      : state.name}
+                    {state.name}
                   </p>
                   {state.status !== "pending" && state.subText && (
                     <p className="text-xs text-muted font-volksansTest left-0 mt-0.5">
@@ -196,15 +183,24 @@ const DownloadData: React.FC = () => {
                     />
                   </div>
                 )}
+                {state.status === "inprogress" && !state.tasks?.length && (
+                  <Image
+                    src="/icons/spinner.svg"
+                    width={16}
+                    height={16}
+                    alt="spinner"
+                    className="animate-spinner"
+                  />
+                )}
               </div>
-              {/* Show subtasks only if the task is in progress or completed, and not for "Loading Leagues" until active */}
-              {state.status !== "pending" && state.status !== "completed" && (
-                <div className="mt-4 space-y-2 p-3 bg-[#26262699]">
-                  {state?.tasks?.length > 0 &&
-                    state.tasks.map((task, taskIndex) => (
+              {state.status !== "pending" &&
+                state.status !== "completed" &&
+                state.tasks?.length > 0 && (
+                  <div className="mt-4 space-y-2 p-3 bg-[#26262699] rounded">
+                    {state.tasks.map((task, taskIndex) => (
                       <div
                         key={taskIndex}
-                        className={`flex flex-col gap-1   ${
+                        className={`flex flex-col gap-1 ${
                           taskIndex !== state.tasks.length - 1
                             ? "border-b border-[#404040] pb-3"
                             : ""
@@ -231,20 +227,29 @@ const DownloadData: React.FC = () => {
                           )}
                         </div>
                         {task.status === "inprogress" && (
-                          <div className="flex items-center">
-                            <p className="text-xs text-muted font-volksansTest">
-                              {Math.round(task.completedPercentage)}%
-                            </p>
-                            <p className="w-0.5 h-0.5 bg-muted rounded-full mx-2"></p>
-                            <p className="text-xs text-muted font-volksansTest">
-                              {Math.round(task.timeLeft)}s Left
-                            </p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                              <p className="text-xs text-muted font-volksansTest">
+                                {Math.round(task.completedPercentage)}%
+                              </p>
+                              <p className="w-0.5 h-0.5 bg-muted rounded-full mx-2"></p>
+                              <p className="text-xs text-muted font-volksansTest">
+                                {Math.round(task.timeLeft)}s Left
+                              </p>
+                            </div>
+                            <Image
+                              src="/icons/spinner.svg"
+                              width={12}
+                              height={12}
+                              alt="spinner"
+                              className="animate-spinner"
+                            />
                           </div>
                         )}
                       </div>
                     ))}
-                </div>
-              )}
+                  </div>
+                )}
             </div>
           ))}
         </div>

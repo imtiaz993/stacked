@@ -5,12 +5,13 @@ import Image from "next/image";
 import Connect from "./components/Connect";
 import DownloadData from "./components/DownloadData";
 import Button from "../../components/Button";
-import { tools, Tool } from "./tools";
+import { tools } from "../../../constants";
+import { Tool } from "../../../types/tools";
 
 export default function Home() {
   const [selected, setSelected] = useState<string[]>([]);
   const [openConnect, setOpenConnect] = useState<boolean>(false);
-  const [openDownload, setOpenDownload] = useState<boolean>(false);
+  const [openDownload, setOpenDownload] = useState<boolean>(true);
 
   return (
     <>
