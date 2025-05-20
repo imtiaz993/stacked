@@ -108,7 +108,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
               maxLength={1}
               pattern="[0-9]*"
               {...(otpForm.getFieldProps(key) as FieldInputProps<string>)}
-              className="bg-muted-white font-volksansTest outline-none rounded p-2.5 h-16 md:h-20 text-light text-[40px] text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="bg-muted-white font-volksansTest outline-none rounded p-2.5 h-16 md:h-20 text-light text-3xl md:text-[40px] text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
           ))}
         </div>
