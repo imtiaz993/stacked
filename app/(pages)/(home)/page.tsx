@@ -11,7 +11,7 @@ import { Tool } from "../../../types/tools";
 export default function Home() {
   const [selected, setSelected] = useState<string[]>([]);
   const [openConnect, setOpenConnect] = useState<boolean>(false);
-  const [openDownload, setOpenDownload] = useState<boolean>(true);
+  const [openDownload, setOpenDownload] = useState<boolean>(false);
 
   return (
     <>
