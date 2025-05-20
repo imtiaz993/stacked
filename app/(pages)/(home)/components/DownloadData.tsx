@@ -6,6 +6,9 @@ import { FlickeringGrid } from "../../../components/FlickeringGrid";
 
 const DownloadData: React.FC = () => {
   const [states, setStates] = useState<Task[]>(tasks);
+  const [animationStates, setAnimationStates] = useState<{
+    [key: number]: "expanding" | "collapsing" | "none";
+  }>({});
 
   // Simulate progress for tasks and subtasks
   useEffect(() => {
@@ -26,6 +29,10 @@ const DownloadData: React.FC = () => {
             // If the task has subtasks, start the first subtask
             if (newStates[activeTaskIndex].tasks?.length > 0) {
               newStates[activeTaskIndex].tasks[0].status = "inprogress";
+              setAnimationStates((prev) => ({
+                ...prev,
+                [activeTaskIndex]: "expanding",
+              }));
             }
           }
           return newStates;
@@ -80,6 +87,10 @@ const DownloadData: React.FC = () => {
             } else {
               // All subtasks completed, mark task as completed
               activeTask.status = "completed";
+              setAnimationStates((prev) => ({
+                ...prev,
+                [activeTaskIndex]: "collapsing",
+              }));
 
               // Start the next task if available
               const nextTaskIndex = newStates.findIndex(
@@ -90,6 +101,10 @@ const DownloadData: React.FC = () => {
                 newStates[nextTaskIndex].status = "inprogress";
                 if (newStates[nextTaskIndex].tasks?.length > 0) {
                   newStates[nextTaskIndex].tasks[0].status = "inprogress";
+                  setAnimationStates((prev) => ({
+                    ...prev,
+                    [nextTaskIndex]: "expanding",
+                  }));
                 }
               } else {
                 // All tasks completed, stop the interval
@@ -124,6 +139,10 @@ const DownloadData: React.FC = () => {
               newStates[nextTaskIndex].status = "inprogress";
               if (newStates[nextTaskIndex].tasks?.length > 0) {
                 newStates[nextTaskIndex].tasks[0].status = "inprogress";
+                setAnimationStates((prev) => ({
+                  ...prev,
+                  [nextTaskIndex]: "expanding",
+                }));
               }
             } else {
               // All tasks completed, stop the interval
@@ -210,7 +229,15 @@ const DownloadData: React.FC = () => {
               {state.status !== "pending" &&
                 state.status !== "completed" &&
                 state.tasks?.length > 0 && (
-                  <div className="mt-4 space-y-2 p-3 bg-subtask-bg rounded">
+                  <div
+                    className={`mt-4 space-y-2 p-3 bg-subtask-bg rounded overflow-hidden ${
+                      animationStates[index] === "expanding"
+                        ? "animate-expand"
+                        : animationStates[index] === "collapsing"
+                        ? "animate-collapse"
+                        : ""
+                    }`}
+                  >
                     {state.tasks.map((task, taskIndex) => (
                       <div
                         key={taskIndex}
@@ -230,7 +257,6 @@ const DownloadData: React.FC = () => {
                           >
                             {task.name}
                           </p>
-
                           {task.status === "completed" && (
                             <Image
                               src="/icons/check.svg"
