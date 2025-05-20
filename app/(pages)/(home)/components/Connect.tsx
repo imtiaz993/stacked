@@ -3,9 +3,18 @@ import Image from "next/image";
 import Login from "./Login";
 import OTPVerification from "./OTPVerification";
 
-const Connect = ({ setOpenConnect, setOpenDownload }) => {
-  const [state, setState] = useState("login");
-  const [email, setEmail] = useState("");
+interface ConnectProps {
+  setOpenConnect: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenDownload: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Connect: React.FC<ConnectProps> = ({
+  setOpenConnect,
+  setOpenDownload,
+}) => {
+  const [state, setState] = useState<"login" | "otp">("login");
+  const [email, setEmail] = useState<string>("");
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="fixed inset-0 bg-[#00000040] z-40"></div>

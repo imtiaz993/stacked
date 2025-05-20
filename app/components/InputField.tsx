@@ -1,10 +1,27 @@
 import Image from "next/image";
+import { FieldInputProps } from "formik";
 
-const InputField = ({ prefix, type, placeholder, props, showError, error }) => {
+interface InputFieldProps {
+  prefix?: string;
+  type: string;
+  placeholder: string;
+  props?: FieldInputProps<any>;
+  showError?: boolean;
+  error?: string;
+}
+
+const InputField: React.FC<InputFieldProps> = ({
+  prefix = "",
+  type,
+  placeholder,
+  props = {},
+  showError = false,
+  error,
+}) => {
   return (
     <div>
       <div className="bg-[#FFFFFF1A] rounded flex items-center gap-2 p-2.5">
-        {prefix && <Image src={prefix} width={20} height={20} alt="preffix" />}
+        {prefix && <Image src={prefix} width={20} height={20} alt="prefix" />}
         <input
           placeholder={placeholder}
           type={type}

@@ -1,4 +1,18 @@
-const Button = ({ handleClick, disabled, text, type }) => {
+import React from "react";
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  handleClick?: () => void;
+  disabled?: boolean;
+  text: string;
+  type?: "button" | "submit";
+}
+
+const Button: React.FC<ButtonProps> = ({
+  handleClick = () => {},
+  disabled = false,
+  text,
+  type = "button",
+}) => {
   return (
     <button
       type={type}

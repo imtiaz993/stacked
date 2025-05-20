@@ -4,13 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import Connect from "./components/Connect";
 import DownloadData from "./components/DownloadData";
-import { tools } from "./tools";
 import Button from "../../components/BUtton";
+import { tools, Tool } from "./tools";
 
 export default function Home() {
-  const [selected, setSelected] = useState([]);
-  const [openConnect, setOpenConnect] = useState(false);
-  const [openDownload, setOpenDownload] = useState(false);
+  const [selected, setSelected] = useState<string[]>([]);
+  const [openConnect, setOpenConnect] = useState<boolean>(false);
+  const [openDownload, setOpenDownload] = useState<boolean>(false);
 
   return (
     <>
@@ -21,7 +21,7 @@ export default function Home() {
         />
       )}
       {openDownload && <DownloadData />}
-      <div className="bg-[#030303] min-h-dvh ">
+      <div className="bg-[#030303] min-h-dvh">
         <div>
           <Image
             src="/images/home-bg.png"
@@ -50,7 +50,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="my-10 flex flex-col gap-3">
-                {tools.map((tool, index) => {
+                {tools.map((tool: Tool, index: number) => {
                   const isSelected = selected.includes(tool.name);
                   return (
                     <div
@@ -105,13 +105,13 @@ export default function Home() {
                   handleClick={() => {
                     setOpenConnect(true);
                   }}
-                  disabled={selected.length == 0}
+                  disabled={selected.length === 0}
                   text={
                     selected.length > 0
                       ? "Continue"
                       : "Add at least one platform to Continue"
                   }
-                  type={"button"}
+                  type="button"
                 />
               </div>
             </div>

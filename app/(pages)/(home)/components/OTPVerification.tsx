@@ -1,15 +1,34 @@
 import { useRef, useEffect } from "react";
-import { useFormik } from "formik";
+import { useFormik, FieldInputProps } from "formik";
 import * as Yup from "yup";
 
-const OTPVerification = ({ email, setOpenConnect, setOpenDownload }) => {
+interface OTPVerificationProps {
+  email: string;
+  setOpenConnect: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenDownload: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface OTPFormValues {
+  otp1: string;
+  otp2: string;
+  otp3: string;
+  otp4: string;
+  otp5: string;
+  otp6: string;
+}
+
+const OTPVerification: React.FC<OTPVerificationProps> = ({
+  email,
+  setOpenConnect,
+  setOpenDownload,
+}) => {
   const otpRefs = [
-    useRef(null),
-    useRef(null),
-    useRef(null),
-    useRef(null),
-    useRef(null),
-    useRef(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
   ];
 
   const otpSchema = Yup.object().shape({
@@ -21,7 +40,7 @@ const OTPVerification = ({ email, setOpenConnect, setOpenDownload }) => {
     otp6: Yup.string().matches(/^\d$/, "One digit only").required("Required"),
   });
 
-  const otpForm = useFormik({
+  const otpForm = useFormik<OTPFormValues>({
     initialValues: {
       otp1: "",
       otp2: "",
@@ -31,7 +50,7 @@ const OTPVerification = ({ email, setOpenConnect, setOpenDownload }) => {
       otp6: "",
     },
     validationSchema: otpSchema,
-    onSubmit: (values) => {
+    onSubmit: (values: OTPFormValues) => {
       console.log("OTP Submitted:", values);
       setOpenConnect(false);
       setOpenDownload(true);
@@ -39,19 +58,20 @@ const OTPVerification = ({ email, setOpenConnect, setOpenDownload }) => {
   });
 
   useEffect(() => {
-    otpRefs[0].current.focus();
+    otpRefs[0].current?.focus();
     otpRefs.forEach((ref, index) => {
       const input = ref.current;
       if (input) {
-        input.addEventListener("input", (e) => {
-          const value = e.target.value;
+        input.addEventListener("input", (e: Event) => {
+          const target = e.target as HTMLInputElement;
+          const value = target.value;
           if (value.length === 1 && index < 5) {
-            otpRefs[index + 1].current.focus();
+            otpRefs[index + 1].current?.focus();
           }
         });
-        input.addEventListener("keydown", (e) => {
+        input.addEventListener("keydown", (e: KeyboardEvent) => {
           if (e.key === "Backspace" && !input.value && index > 0) {
-            otpRefs[index - 1].current.focus();
+            otpRefs[index - 1].current?.focus();
           }
         });
       }
@@ -71,6 +91,7 @@ const OTPVerification = ({ email, setOpenConnect, setOpenDownload }) => {
       otpForm.submitForm();
     }
   }, [otpForm.values]);
+
   return (
     <div className="mt-8">
       <div>
@@ -86,7 +107,7 @@ const OTPVerification = ({ email, setOpenConnect, setOpenDownload }) => {
               inputMode="numeric"
               maxLength={1}
               pattern="[0-9]*"
-              {...otpForm.getFieldProps(key)}
+              {...(otpForm.getFieldProps(key) as FieldInputProps<string>)}
               className="bg-[#FFFFFF1A] font-volksansTest outline-none rounded p-2.5 h-16 md:h-20 text-[#FFFFF6] text-[40px] text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
           ))}
