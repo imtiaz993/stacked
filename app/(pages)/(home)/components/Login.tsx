@@ -1,7 +1,7 @@
 import { useFormik, FormikValues, FieldInputProps } from "formik";
 import * as Yup from "yup";
 import InputField from "../../../components/InputField";
-import Button from "../../../components/BUtton";
+import Button from "../../../components/Button";
 
 interface LoginProps {
   setState: React.Dispatch<React.SetStateAction<"login" | "otp">>;

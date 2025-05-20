@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Connect from "./components/Connect";
 import DownloadData from "./components/DownloadData";
-import Button from "../../components/BUtton";
+import Button from "../../components/Button";
 import { tools, Tool } from "./tools";
 
 export default function Home() {
