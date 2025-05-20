@@ -4,33 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import Connect from "./components/Connect";
 import DownloadData from "./components/DownloadData";
-const tools = [
-  {
-    name: "Sleeper",
-    subtext: "",
-    icon: "/icons/sleeper.svg",
-  },
-  {
-    name: "ESPN",
-    subtext: "2FA required",
-    icon: "/icons/espn.svg",
-  },
-  {
-    name: "Yahoo",
-    subtext: "",
-    icon: "/icons/yahoo.svg",
-  },
-  {
-    name: "CBS",
-    subtext: "",
-    icon: "/icons/cbs.svg",
-  },
-  {
-    name: "NFL.com",
-    subtext: "",
-    icon: "/icons/nfl.svg",
-  },
-];
+import { tools } from "./tools";
+import Button from "../../components/BUtton";
 
 export default function Home() {
   const [selected, setSelected] = useState([]);
@@ -126,21 +101,18 @@ export default function Home() {
                 })}
               </div>
               <div className="pb-4">
-                <button
-                  className={`rounded  font-medium leading-5 px-5 w-full min-h-[48px] font-volksansTest ${
-                    selected.length > 0
-                      ? "text-[#030303] bg-[#B5FF4D]"
-                      : "text-[#666662] bg-[#FFFFFF1A] border border-[#FFFFFF33]"
-                  }`}
-                  disabled={selected.length == 0}
-                  onClick={() => {
+                <Button
+                  handleClick={() => {
                     setOpenConnect(true);
                   }}
-                >
-                  {selected.length > 0
-                    ? "Continue"
-                    : "Add at least one platform to Continue"}
-                </button>
+                  disabled={selected.length == 0}
+                  text={
+                    selected.length > 0
+                      ? "Continue"
+                      : "Add at least one platform to Continue"
+                  }
+                  type={"button"}
+                />
               </div>
             </div>
           </div>
